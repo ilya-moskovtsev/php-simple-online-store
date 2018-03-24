@@ -29,15 +29,22 @@ class Router
              * ~ delimiter is used because we may have / in $uriPattern
              */
             if (preg_match("~$uriPattern~", $uri)) {
+
+                // Define internal route
+                $internalRoute = preg_replace("~$uriPattern~", $controllerAction, $uri);
+
                 /*
                  * If there is a match,
                  * decide what Controller
                  * and what action
                  * will handle the request
                  */
-                $segments = explode('/', $controllerAction);
+                $segments = explode('/', $internalRoute);
                 $controllerClassName = ucfirst(array_shift($segments)) . 'Controller';
                 $actionFunctionName = 'action' . ucfirst(array_shift($segments));
+
+                // Define action parameters
+                $actionParameters = $segments;
 
                 // Include Controller class file
                 $controllerFilePath = ROOT . '/controllers/' . $controllerClassName . '.php';
@@ -45,9 +52,10 @@ class Router
                     include_once($controllerFilePath);
                 }
 
-                // Create object, call method (action)
+                // Create controller object
                 $controllerObject = new $controllerClassName;
-                $result = $controllerObject->$actionFunctionName();
+                // Call action with parameters
+                $result = call_user_func_array(array($controllerObject, $actionFunctionName), $actionParameters);
                 if ($result != null) {
                     break;
                 }

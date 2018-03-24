@@ -16,13 +16,15 @@ class NewsController
      */
     public function actionIndex()
     {
-        echo __METHOD__;
+//        echo __METHOD__;
 
         $newsList = News::getNewsList();
 
-        echo '<pre>';
-        print_r($newsList);
-        echo '</pre>';
+//        echo '<pre>';
+//        print_r($newsList);
+//        echo '</pre>';
+
+        require_once(ROOT.'/views/news/index.php');
 
         return true;
     }
@@ -34,15 +36,17 @@ class NewsController
      */
     public function actionView($id)
     {
-        echo __METHOD__;
-        echo '<br>'. $id;
+//        echo __METHOD__;
+//        echo '<br>'. $id;
 
         if ($id) {
             $newsItem = News::getNewsItemById($id);
 
-            echo '<pre>';
-            print_r($newsItem);
-            echo '</pre>';
+//            echo '<pre>';
+//            print_r($newsItem);
+//            echo '</pre>';
+
+            require_once(ROOT.'/views/news/view.php');
 
         }
 

@@ -2,4 +2,9 @@ AddDefaultCharset utf-8
 
 RewriteEngine on
 RewriteBase /
+
+# makes template files (css, fonts, images, js) available
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
 RewriteRule ^(.*)$ index.php

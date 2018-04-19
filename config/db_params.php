@@ -10,7 +10,7 @@ return array(
     'host' => 'localhost',
     'user' => 'root',
     'password' => '',
-    'dbname' => 'newssite',
+    'dbname' => 'phpshop',
     'port' => '8080',
     'charset' => 'utf8mb4',
 );

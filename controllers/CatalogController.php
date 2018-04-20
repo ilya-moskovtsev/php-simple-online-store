@@ -17,4 +17,17 @@ class CatalogController
 
         return true;
     }
+
+    public function actionCategory($categoryId)
+    {
+        $categories = array();
+        $categories = Category::getCategoryList();
+
+        $categoryProducts = array();
+        $categoryProducts = Product::getProductListByCategory($categoryId);
+
+        require_once(ROOT . '/views/catalog/category.php');
+
+        return true;
+    }
 }

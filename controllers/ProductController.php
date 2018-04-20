@@ -1,15 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: ilya
- * Date: 10/02/2018
- * Time: 21:30
- */
+
+include_once ROOT . '/models/Category.php';
+include_once ROOT . '/models/Product.php';
 
 class ProductController
 {
-    public function actionView($id)
+    public function actionView($productId)
     {
+        $categories = array();
+        $categories = Category::getCategoryList();
+
+        $product = Product::getProductById($productId);
+
         require_once(ROOT . '/views/product/view.php');
 
         return true;

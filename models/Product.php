@@ -54,4 +54,20 @@ class Product
             return $productList;
         }
     }
+
+    public static function getProductById($productId)
+    {
+        $productId = intval($productId);
+
+        if ($productId) {
+
+            $db = Db::getDb();
+
+            $result = $db->query('SELECT * FROM product '
+                . "WHERE id = '{$productId}'");
+            $result->setFetchMode(PDO::FETCH_ASSOC);
+
+            return $result->fetch();
+        }
+    }
 }

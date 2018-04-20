@@ -11,7 +11,9 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a href="/category/<?php echo $category['id'];?>">
+                                        <a href="/category/<?php echo $category['id'];?>"
+                                           class="<?php if ($category['id'] == $categoryId) echo 'active'; ?>"
+                                        >
                                             <?php echo $category['name'];?>
                                         </a>
                                     </h4>

@@ -2,20 +2,22 @@
 
 class Product
 {
-    const DEFAULT_LIMIT = 10;
+    const DEFAULT_LIMIT = 3;
 
-    public static function getLatestProducts($limit = self::DEFAULT_LIMIT)
+    public static function getLatestProducts($currentPage = 1)
     {
-        $limit = intval($limit);
+        $currentPage = intval($currentPage);
+        $offset = ($currentPage - 1) * self::DEFAULT_LIMIT;
 
         $db = Db::getDb();
 
         $productList = array();
 
         $result = $db->query('SELECT id, name, price, is_new FROM product '
-            . 'WHERE status = "1" '
+            . "WHERE status = '1'"
             . 'ORDER BY id DESC '
-            . 'LIMIT ' . $limit);
+            . 'LIMIT ' . self::DEFAULT_LIMIT
+            . ' OFFSET ' . $offset);
 
         $i = 0;
         while ($row = $result->fetch()) {
@@ -29,9 +31,12 @@ class Product
         return $productList;
     }
 
-    public static function getProductListByCategory($categoryId = false)
+    public static function getProductListByCategory($categoryId = false, $currentPage = 1)
     {
         if ($categoryId) {
+
+            $currentPage = intval($currentPage);
+            $offset = ($currentPage - 1) * self::DEFAULT_LIMIT;
 
             $db = Db::getDb();
 
@@ -40,7 +45,8 @@ class Product
             $result = $db->query('SELECT id, name, price, is_new FROM product '
                 . "WHERE status = '1' AND category_id = '{$categoryId}'"
                 . 'ORDER BY id DESC '
-                . 'LIMIT ' . self::DEFAULT_LIMIT);
+                . 'LIMIT ' . self::DEFAULT_LIMIT
+                . ' OFFSET ' . $offset);
 
             $i = 0;
             while ($row = $result->fetch()) {
@@ -69,5 +75,29 @@ class Product
 
             return $result->fetch();
         }
+    }
+
+    public static function getProductCountInCategory($categoryId)
+    {
+        $db = Db::getDb();
+
+        $result = $db->query('SELECT count(id) AS count FROM product '
+            . "WHERE status = '1' AND category_id = '{$categoryId}'");
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+
+        return $row['count'];
+    }
+
+    public static function getProductCount()
+    {
+        $db = Db::getDb();
+
+        $result = $db->query('SELECT count(id) AS count FROM product '
+            . "WHERE status = '1'");
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+        $row = $result->fetch();
+
+        return $row['count'];
     }
 }

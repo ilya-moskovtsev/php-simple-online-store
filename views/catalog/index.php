@@ -33,7 +33,7 @@
                                         <img src="/template/images/home/product6.jpg" alt="" />
                                         <h2>$<?php echo $product['price'];?></h2>
                                         <a href="/product/<?php echo $product['id'];?>">
-                                            <p><?php echo $product['name'];?></p>
+                                            <p><?php echo "ID: {$product['id']} {$product['name']}";?></p>
                                         </a>
                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>В корзину</a>
                                     </div>
@@ -45,7 +45,7 @@
                         </div>
                     <?php endforeach; ?>
                 </div><!--features_items-->
-
+                <?php echo $pagination->get(); ?>
             </div>
         </div>
     </div>

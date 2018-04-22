@@ -2,29 +2,38 @@
 
 include_once ROOT . '/models/Category.php';
 include_once ROOT . '/models/Product.php';
+include_once ROOT . '/components/Pagination.php';
 
 class CatalogController
 {
-    public function actionIndex()
+    public function actionIndex($currentPage = 1)
     {
         $categories = array();
         $categories = Category::getCategoryList();
 
         $latestProducts = array();
-        $latestProducts = Product::getLatestProducts(12);
+        $latestProducts = Product::getLatestProducts($currentPage);
+
+        $total = Product::getProductCount();
+
+        $pagination = new Pagination($total, $currentPage, Product::DEFAULT_LIMIT, 'page-');
 
         require_once(ROOT . '/views/catalog/index.php');
 
         return true;
     }
 
-    public function actionCategory($categoryId)
+    public function actionCategory($categoryId, $currentPage = 1)
     {
         $categories = array();
         $categories = Category::getCategoryList();
 
         $categoryProducts = array();
-        $categoryProducts = Product::getProductListByCategory($categoryId);
+        $categoryProducts = Product::getProductListByCategory($categoryId, $currentPage);
+
+        $total = Product::getProductCountInCategory($categoryId);
+
+        $pagination = new Pagination($total, $currentPage, Product::DEFAULT_LIMIT, 'page-');
 
         require_once(ROOT . '/views/catalog/category.php');
 

@@ -11,7 +11,7 @@ class SiteController
         $categories = Category::getCategoryList();
 
         $latestProducts = array();
-        $latestProducts = Product::getLatestProducts(6);
+        $latestProducts = Product::getLatestProducts();
 
         require_once(ROOT . '/views/site/index.php');
 

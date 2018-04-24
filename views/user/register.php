@@ -7,10 +7,10 @@
                 <div class="signup-form">
                     <h2>Регистрация на сайте</h2>
                     <form action="#" method="post">
-                        <input type="text" placeholder="Имя"/>
-                        <input type="email" placeholder="E-mail"/>
-                        <input type="password" placeholder="Пароль"/>
-                        <button type="submit" class="btn btn-default">Регистрация</button>
+                        <input type="text" name="name" placeholder="Имя"/>
+                        <input type="email" name="email" placeholder="E-mail"/>
+                        <input type="password" name="password" placeholder="Пароль"/>
+                        <input type="submit" name="submit" class="btn btn-default" value="Регистрация">
                     </form>
                 </div>
                 <br/>

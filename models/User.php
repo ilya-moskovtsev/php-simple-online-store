@@ -21,6 +21,27 @@ class User
     }
 
     /**
+     * @param $email
+     * @return bool
+     */
+    public static function checkEmailExists($email)
+    {
+        $db = Db::getDb();
+
+        $sql = 'SELECT COUNT(*) FROM user WHERE email = :email';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':email', $email);
+        $result->execute();
+
+        if ($result->fetchColumn()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * @param $password
      * @return bool
      */

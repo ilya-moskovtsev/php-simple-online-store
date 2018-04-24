@@ -18,7 +18,11 @@ class UserController
             if (!User::checkName($name)) {
                 $errors[] = 'Имя не должно быть короче 2-х символов';
             }
-            if (!User::checkEmail($email)) {
+            if (User::checkEmail($email)) {
+                if (User::checkEmailExists($email)) {
+                    $errors[] = 'Такой email уже используется';
+                }
+            } else {
                 $errors[] = 'Неправильный email';
             }
             if (!User::checkPassword($password)) {

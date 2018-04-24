@@ -49,4 +49,25 @@ class User
     {
         return strlen($password) >= 6;
     }
+
+    /**
+     * @param $name
+     * @param $email
+     * @param $password
+     * @return bool
+     */
+    public static function register($name, $email, $password)
+    {
+        $db = Db::getDb();
+
+        $sql = 'INSERT INTO user (name, email, password) '
+        . 'VALUES (:name, :email, :password)';
+
+        $result = $db->prepare($sql);
+        $result->bindParam(':name', $name);
+        $result->bindParam(':email', $email);
+        $result->bindParam(':password', $password);
+
+        return $result->execute();
+    }
 }

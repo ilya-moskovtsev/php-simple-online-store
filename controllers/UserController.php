@@ -7,6 +7,7 @@ class UserController
         $name = '';
         $email = '';
         $password = '';
+        $isRegistered = false;
 
         if (isset($_POST['submit'])) {
             $name = $_POST['name'];
@@ -27,6 +28,10 @@ class UserController
             }
             if (!User::checkPassword($password)) {
                 $errors[] = 'Пароль не должен быть короче 6-ти символов';
+            }
+
+            if ($errors == false) {
+                $isRegistered = User::register($name, $email, $password);
             }
         }
         require_once(ROOT . '/views/user/register.php');

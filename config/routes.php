@@ -12,6 +12,7 @@ return array(
     'catalog' => 'catalog/index',
     'category/([0-9]+)/page-([0-9]+)' => 'catalog/category/$1/$2',
     'category/([0-9]+)' => 'catalog/category/$1',
+    'user/register' => 'user/register',
     '' => 'site/index',
     'news/([0-9]+)' => 'news/view/$1', // NewsController::actionView
     'news' => 'news/index', // NewsController::actionIndex

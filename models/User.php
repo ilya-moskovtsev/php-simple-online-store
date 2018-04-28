@@ -61,7 +61,7 @@ class User
         $db = Db::getDb();
 
         $sql = 'INSERT INTO user (name, email, password) '
-        . 'VALUES (:name, :email, :password)';
+            . 'VALUES (:name, :email, :password)';
 
         $result = $db->prepare($sql);
         $result->bindParam(':name', $name);
@@ -69,5 +69,37 @@ class User
         $result->bindParam(':password', $password);
 
         return $result->execute();
+    }
+
+    /**
+     * @param $email
+     * @param $password
+     * @return bool|mixed : integer user id or false
+     */
+    public static function checkUserData($email, $password)
+    {
+        $db = Db::getDb();
+
+        $sql = 'SELECT id FROM user WHERE email = :email AND password = :password';
+        $result = $db->prepare($sql);
+        $result->bindParam(':email', $email);
+        $result->bindParam(':password', $password);
+        $result->execute();
+
+        $userId = $result->fetch();
+        if ($userId) {
+            return $userId;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $userId
+     */
+    public static function auth($userId)
+    {
+        session_start();
+        $_SESSION['user'] = $userId;
     }
 }

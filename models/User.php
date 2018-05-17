@@ -86,7 +86,9 @@ class User
         $result->bindParam(':password', $password);
         $result->execute();
 
-        $userId = $result->fetch();
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        $userId = $result->fetch()['id'];
         if ($userId) {
             return $userId;
         }
@@ -99,7 +101,38 @@ class User
      */
     public static function auth($userId)
     {
-        session_start();
         $_SESSION['user'] = $userId;
+    }
+
+    public static function checkLogged()
+    {
+        if (isset($_SESSION['user'])) {
+            return $_SESSION['user'];
+        }
+
+        header('Location: /user/login');
+    }
+
+    public static function isGuest()
+    {
+        if (isset($_SESSION['user'])) {
+            return false;
+        }
+        return true;
+    }
+
+    public static function getUserById($userID)
+    {
+        $db = Db::getDb();
+
+        $sql = "SELECT * FROM user WHERE id = :id";
+        $result = $db->prepare($sql);
+        $result->bindParam(':id', $userID, PDO::PARAM_INT);
+
+        $result->execute();
+
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $result->fetch();
     }
 }

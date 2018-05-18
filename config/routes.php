@@ -17,7 +17,9 @@ return array(
     'user/login' => 'user/login',
     'user/logout' => 'user/logout',
 
+    'cabinet/edit' => 'cabinet/edit',
     'cabinet' => 'cabinet/index',
+
     '' => 'site/index',
     'news/([0-9]+)' => 'news/view/$1', // NewsController::actionView
     'news' => 'news/index', // NewsController::actionIndex

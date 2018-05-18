@@ -135,4 +135,17 @@ class User
 
         return $result->fetch();
     }
+
+    public static function edit($userID, $name, $password)
+    {
+        $db = Db::getDb();
+
+        $sql = "UPDATE user SET name = :name, password = :password WHERE id = :id";
+        $result = $db->prepare($sql);
+        $result->bindParam(':name', $name, PDO::PARAM_STR);
+        $result->bindParam(':password', $password, PDO::PARAM_STR);
+        $result->bindParam(':id', $userID, PDO::PARAM_INT);
+
+        return $result->execute();
+    }
 }

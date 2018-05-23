@@ -28,10 +28,10 @@ class Router
              * Compare $uriPattern and $uri
              * ~ delimiter is used because we may have / in $uriPattern
              */
-            if (preg_match("~$uriPattern~", $uri)) {
+            if (preg_match("~^$uriPattern$~", $uri)) {
 
                 // Define internal route
-                $internalRoute = preg_replace("~$uriPattern~", $controllerAction, $uri);
+                $internalRoute = preg_replace("~^$uriPattern$~", $controllerAction, $uri);
 
                 /*
                  * If there is a match,
